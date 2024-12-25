@@ -123,7 +123,7 @@ function AddCourse() {
     console.log(courseData);
     
     try {
-      const response = await fetch("https://anish-cognitech-backend-fwia.onrender.com/api/add-course/courses-add", {
+      const response = await fetch("https://anish-cognitech-404-back.onrender.com/api/add-course/courses-add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

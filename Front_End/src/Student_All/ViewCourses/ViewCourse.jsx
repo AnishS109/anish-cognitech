@@ -34,7 +34,7 @@ function ViewCourse() {
     if (course_id) {
       const fetchCourseData = async () => {
         try {
-          const response = await fetch(`https://anish-cognitech-backend-fwia.onrender.com/api/router/course/${course_id}`);
+          const response = await fetch(`https://anish-cognitech-404-back.onrender.com/api/router/course/${course_id}`);
           const data = await response.json();
           setCourseData(data);
         } catch (error) {
@@ -344,7 +344,7 @@ export default ViewCourse;
 //     if (course_id) {
 //       const fetchCourseData = async () => {
 //         try {
-//           const response = await fetch(`https://anish-cognitech-backend-fwia.onrender.com/api/router/course/${course_id}`);
+//           const response = await fetch(`https://anish-cognitech-404-back.onrender.com/api/router/course/${course_id}`);
 //           const data = await response.json();
 //           setCourseData(data);
 //         } catch (error) {

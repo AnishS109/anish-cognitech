@@ -11,7 +11,7 @@ const AdminUserManage = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch('https://anish-cognitech-backend-fwia.onrender.com/api/admin-s/admin-student-details');
+      const response = await fetch('https://anish-cognitech-404-back.onrender.com/api/admin-s/admin-student-details');
       const data = await response.json();
       setStudents(data);
       setStudentLoad(false)
@@ -27,7 +27,7 @@ const AdminUserManage = () => {
 
   const confirmDelete = async () => {
     try {
-      const response = await fetch(`https://anish-cognitech-backend-fwia.onrender.com/api/admin-user-m/user-manage/${studentToDelete}`, {
+      const response = await fetch(`https://anish-cognitech-404-back.onrender.com/api/admin-user-m/user-manage/${studentToDelete}`, {
         method: 'DELETE',
       });
 

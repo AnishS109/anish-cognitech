@@ -20,7 +20,7 @@
 
 //   const fetchCourses = async () => {
 //     try {
-//       const response = await fetch('https://anish-cognitech-backend-fwia.onrender.com/api/all/all-courses');
+//       const response = await fetch('https://anish-cognitech-404-back.onrender.com/api/all/all-courses');
 //       const data = await response.json();
 //       setAllCourses(data);
 //     } catch (error) {
@@ -42,7 +42,7 @@
 //     }
   
 //     try {
-//       const response = await fetch(`https://anish-cognitech-backend-fwia.onrender.com/api/admin-d/delete-course/${courseId}`, {
+//       const response = await fetch(`https://anish-cognitech-404-back.onrender.com/api/admin-d/delete-course/${courseId}`, {
 //         method: 'DELETE',
 //       });
   
@@ -153,7 +153,7 @@ const AdminCourseManage = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch('https://anish-cognitech-backend-fwia.onrender.com/api/all/all-courses');
+      const response = await fetch('https://anish-cognitech-404-back.onrender.com/api/all/all-courses');
       const data = await response.json();
       setAllCourses(data);
       setCourseLoad(false)
@@ -175,7 +175,7 @@ const AdminCourseManage = () => {
     if (!courseToDelete) return;
     
     try {
-      const response = await fetch(`https://anish-cognitech-backend-fwia.onrender.com/api/admin-d/delete-course/${courseToDelete}`, {
+      const response = await fetch(`https://anish-cognitech-404-back.onrender.com/api/admin-d/delete-course/${courseToDelete}`, {
         method: 'DELETE',
       });
 

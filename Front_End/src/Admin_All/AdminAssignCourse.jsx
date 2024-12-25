@@ -52,7 +52,7 @@ const AdminAssignCourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://anish-cognitech-backend-fwia.onrender.com/api/admin-t/course-assign', {
+      const response = await fetch('https://anish-cognitech-404-back.onrender.com/api/admin-t/course-assign', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const AdminAssignCourse = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch('https://anish-cognitech-backend-fwia.onrender.com/api/admin-t/course-details-teacher');
+      const response = await fetch('https://anish-cognitech-404-back.onrender.com/api/admin-t/course-details-teacher');
       const data = await response.json();
       setTeachers(Array.isArray(data) ? data : []);
       setCourseLoad(false)
@@ -91,7 +91,7 @@ const AdminAssignCourse = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch('https://anish-cognitech-backend-fwia.onrender.com/api/admin-t/all-courses');
+      const response = await fetch('https://anish-cognitech-404-back.onrender.com/api/admin-t/all-courses');
       const data = await response.json();
       setCourses(Array.isArray(data) ? data : []);
     } catch (error) {
@@ -106,7 +106,7 @@ const AdminAssignCourse = () => {
 
   const handleDelete = async (teacherId, courseId) => {
     try {
-      const response = await fetch('https://anish-cognitech-backend-fwia.onrender.com/api/admin-t/course-delete', {
+      const response = await fetch('https://anish-cognitech-404-back.onrender.com/api/admin-t/course-delete', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

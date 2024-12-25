@@ -97,7 +97,7 @@
 //       };
   
 //       const response = await fetch(
-//         "https://anish-cognitech-backend-fwia.onrender.com/api/teacher-manage-course/add-lecture-video",
+//         "https://anish-cognitech-404-back.onrender.com/api/teacher-manage-course/add-lecture-video",
 //         {
 //           method: "POST",
 //           headers: {
@@ -133,7 +133,7 @@
 //     const fetchAssignedCourses = async () => {
 //       try {
 //         const response = await fetch(
-//           `https://anish-cognitech-backend-fwia.onrender.com/api/teacher-dashboard/course-student-fetch/${teacherId}`
+//           `https://anish-cognitech-404-back.onrender.com/api/teacher-dashboard/course-student-fetch/${teacherId}`
 //         );
 //         const result = await response.json();
 
@@ -423,7 +423,7 @@ const TeacherCourses = () => {
       };
 
       const response = await fetch(
-        "https://anish-cognitech-backend-fwia.onrender.com/api/teacher-manage-course/add-lecture-video",
+        "https://anish-cognitech-404-back.onrender.com/api/teacher-manage-course/add-lecture-video",
         {
           method: "POST",
           headers: {
@@ -450,7 +450,7 @@ const TeacherCourses = () => {
     const fetchAssignedCourses = async () => {
       try {
         const response = await fetch(
-          `https://anish-cognitech-backend-fwia.onrender.com/api/teacher-dashboard/course-student-fetch/${teacherId}`
+          `https://anish-cognitech-404-back.onrender.com/api/teacher-dashboard/course-student-fetch/${teacherId}`
         );
         const result = await response.json();
 

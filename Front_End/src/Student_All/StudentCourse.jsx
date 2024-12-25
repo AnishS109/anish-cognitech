@@ -53,7 +53,7 @@ const StudentEnrolledCourse = () => {
   
     const fetchEnrolledCourses = async () => {
       try {
-        const response = await axios.get(`https://anish-cognitech-backend-fwia.onrender.com/api/enrolled/enrolled-course`, {
+        const response = await axios.get(`https://anish-cognitech-404-back.onrender.com/api/enrolled/enrolled-course`, {
           params: { student_id: studentId },
         });
   
