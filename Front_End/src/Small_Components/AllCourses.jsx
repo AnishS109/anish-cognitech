@@ -27,7 +27,7 @@ const AllCourses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("https://anish-cognitech.onrender.com/api/all/all-courses");
+        const response = await axios.get("https://anish-cognitech-backend-fwia.onrender.com/api/all/all-courses");
         setCourses(response.data);
       } catch (error) {
         console.error('Error fetching courses:', error);

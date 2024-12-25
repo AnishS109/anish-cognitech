@@ -76,7 +76,7 @@ const AdminRegistration = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("https://anish-cognitech.onrender.com/api/user/user-register", {
+      const response = await fetch("https://anish-cognitech-backend-fwia.onrender.com/api/user/user-register", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

@@ -46,7 +46,7 @@ const TeacherDashBoard = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `https://anish-cognitech.onrender.com/api/teacher-dashboard/course-student-fetch/${teacherId}`
+          `https://anish-cognitech-backend-fwia.onrender.com/api/teacher-dashboard/course-student-fetch/${teacherId}`
         );
         setCourses(response.data);
       } catch (error) {
@@ -79,7 +79,7 @@ const TeacherDashBoard = () => {
 
     try {
       const response = await axios.delete(
-        `https://anish-cognitech.onrender.com/api/teacher-dashboard/course/${courseId}/student/${studentId}`
+        `https://anish-cognitech-backend-fwia.onrender.com/api/teacher-dashboard/course/${courseId}/student/${studentId}`
       );
 
       setCourses((prevCourses) =>

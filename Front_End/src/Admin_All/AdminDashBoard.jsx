@@ -12,7 +12,7 @@ const AdminDashBoard = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch('https://anish-cognitech.onrender.com/api/admin-s/admin-student-details');
+      const response = await fetch('https://anish-cognitech-backend-fwia.onrender.com/api/admin-s/admin-student-details');
       const data = await response.json();
       setStudents(data);
       setStudentLoad(false)
@@ -27,7 +27,7 @@ const AdminDashBoard = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch('https://anish-cognitech.onrender.com/api/admin-t/course-details-teacher'); 
+      const response = await fetch('https://anish-cognitech-backend-fwia.onrender.com/api/admin-t/course-details-teacher'); 
       const data = await response.json();
       setTeachers(data);
       setTeacherLoad(false)
