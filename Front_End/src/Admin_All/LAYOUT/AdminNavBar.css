@@ -1,0 +1,53 @@
+.navbar-options{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.navbar-options li{
+  margin: 0px 20px;
+  font-family: "Robotosans-serif";
+  font-size: 15px;
+}
+
+.navbar-options li a{
+  text-decoration: none;
+  color: white;
+}
+
+.active{
+  font-weight: 500 !important;
+  color: rgb(255, 102, 0) !important;
+}
+
+.drawer-container {
+  text-align: center;
+  padding: 20px;
+  background-color: rgb(6, 52, 104);
+  height: 100%;
+  color: white;
+}
+
+.drawer-logo {
+  color: rgb(235, 71, 30);
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.drawer-options {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.drawer-options li {
+  margin: 15px 0;
+}
+
+.drawer-options li a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}

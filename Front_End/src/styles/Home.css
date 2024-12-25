@@ -1,0 +1,16 @@
+.BestPlatformText {
+  background-color: rgba(6, 52, 104, 0.9);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.BestPlatformText:hover {
+  transform: scale(1.05);
+}
