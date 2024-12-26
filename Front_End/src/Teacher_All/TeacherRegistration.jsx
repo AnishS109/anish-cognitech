@@ -58,7 +58,7 @@ const TeacherRegistration = () => {
     };
 
     try {
-      const response = await fetch('https://anish-cognitech-404-back.onrender.com/api/user/user-register', { // Update the API endpoint
+      const response = await fetch('http://localhost:5001/register', { // Update the API endpoint
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(sanitizedFormData),

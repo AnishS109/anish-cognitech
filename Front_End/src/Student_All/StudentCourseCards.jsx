@@ -17,38 +17,36 @@ import mongoDBIMG from "../Images/mongoDB.jpeg";
 import nodeJSIMG from "../Images/nodeJS.jpeg";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Box } from '@mui/material';
 import { useLocation } from 'react-router-dom';
+import Loader from '../components/Loader';  // Import your Loader component
 
 const StudentCourseCards = () => {
   const [courses, setCourses] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null); 
   const [enrollOpen, setEnrollOpen] = useState(false);
+  const [loading, setLoading] = useState(true);  // Loader state
 
   const location = useLocation();
-
   const studentIdFromLocation = location.state?.student_id;
   const studentId = studentIdFromLocation || localStorage.getItem('student_id');
 
   useEffect(() => {
     if (studentId) {
-      // console.log("Student ID:", studentId); 
-
       localStorage.setItem('student_id', studentId);
     } else {
       console.error("Student ID is missing.");
     }
   }, [studentId]);
-  
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("https://anish-cognitech-404-back.onrender.com/api/all/all-courses");
-        // console.log(response.data);
-        
+        const response = await axios.get("http://localhost:5001/all-courses");
         setCourses(response.data);
+        setLoading(false);  // Hide loader when data is fetched
       } catch (error) {
         console.error('Error fetching courses:', error);
+        setLoading(false);  // Hide loader even if there is an error
       }
     };
     fetchCourses();
@@ -82,7 +80,6 @@ const StudentCourseCards = () => {
 
   const handleEnrollOpen = (course) => {
     setSelectedCourse(course);
-    console.log("Payment Gateway")
     setEnrollOpen(true);  
   };
 
@@ -91,16 +88,12 @@ const StudentCourseCards = () => {
   };
 
   const handleAddCourse = async () => {
-    console.log(studentId,selectedCourse.id);
-    
     if (studentId && selectedCourse) {
       try {
-
-        const response = await axios.post("https://anish-cognitech-404-back.onrender.com/api/enrolled/enrolled-course", {
+        const response = await axios.post("http://localhost:5001/api/enrolled/enrolled-course", {
           student_id: studentId,
           course_id: selectedCourse.id 
         });
-  
         handleEnrollClose();
       } catch (error) {
         console.error('Error enrolling in course:', error);
@@ -112,43 +105,52 @@ const StudentCourseCards = () => {
 
   return (
     <>
-      <Box sx={{ padding: 2 }}>
-        <Grid container spacing={2} justifyContent="center">
-          {courses.map((course, index) => {
-            return (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+      <Box sx={{ padding: { xs: 1, sm: 2, md: 3 }, maxWidth: '1450px', margin: 'auto' }}>
+        {loading ? (  // Display loader while loading courses
+          <Loader />
+        ) : (
+          <Grid container spacing={3} justifyContent="center">
+            {courses.map((course, index) => (
+              <Grid item xs={12} sm={6} md={3} key={index}>
                 <Card sx={{ 
                   maxWidth: 345, 
                   transition: "transform 0.4s ease, box-shadow 0.2s ease", 
-                  "&:hover": { transform: "scale(1.03)", boxShadow: "0 10px 16px rgba(0, 0, 0, 0.8)" }
+                  "&:hover": { transform: "scale(1.03)", boxShadow: "0 10px 16px rgba(0, 0, 0, 0.8)" },
+                  borderRadius: "12px",
+                  boxShadow: 3
                 }}>
                   <CardMedia
-                    sx={{ height: 160, objectFit: 'fill' }}
+                    sx={{
+                      height: 200, 
+                      objectFit: 'cover',
+                      borderTopLeftRadius: "12px",
+                      borderTopRightRadius: "12px"
+                    }}
                     component="img"
                     image={staticImages[normalizeCourseName(course.title)] || Python}
-                    alt={course.name || 'Default Course'}
+                    alt={course.title || 'Default Course'}
                   />
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
                       {course.title}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      {course.description}
+                      {course.description.length > 150 ? course.description.slice(0, 150) + "..." : course.description}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => handleOpen(course)}>
+                    <Button size="small" onClick={() => handleOpen(course)} sx={{ fontWeight: 'bold', color: 'primary.main' }}>
                       View Course
                     </Button>
-                    <Button size="small" onClick={() => handleEnrollOpen(course)}>
+                    <Button size="small" onClick={() => handleEnrollOpen(course)} sx={{ fontWeight: 'bold', color: 'primary.main' }}>
                       Enroll Course
                     </Button>
                   </CardActions>
                 </Card>
               </Grid>
-            );
-          })}
-        </Grid>
+            ))}
+          </Grid>
+        )}
 
         {/* Course details dialog */}
         {selectedCourse && (
@@ -157,7 +159,7 @@ const StudentCourseCards = () => {
             <DialogContent>
               <Typography variant="body1" paragraph>
                 {selectedCourse.description}
-              </Typography>a
+              </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                 <img
                   src={staticImages[normalizeCourseName(selectedCourse.name)] || Python}
@@ -165,20 +167,14 @@ const StudentCourseCards = () => {
                   style={{ width: '250px', height: 'auto' }}
                 />
               </Box>
-              {/* <Box sx={{ marginTop: '20px' }}>
-                <Typography variant="body1" sx={{ fontWeight: 'bold' }}>Total Lectures:</Typography>
-                <Typography variant="body2">{selectedCourse.lecture || 'N/A'}</Typography>
-
-                <Typography variant="body1" sx={{ fontWeight: 'bold', marginTop: '10px' }}>Total Quizzes:</Typography>
-                <Typography variant="body2">{selectedCourse.quiz || 'N/A'}</Typography>
-              </Box> */}
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Close</Button>
+              <Button onClick={handleClose} sx={{ fontWeight: 'bold' }}>Close</Button>
             </DialogActions>
           </Dialog>
         )}
 
+        {/* Enrollment Confirmation Dialog */}
         {enrollOpen && (
           <Dialog open={enrollOpen} onClose={handleEnrollClose} fullWidth maxWidth="sm">
             <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold', color: '#1976d2' }} >
@@ -198,7 +194,6 @@ const StudentCourseCards = () => {
           </Dialog>
         )}
       </Box>
-
     </>
   );
 };

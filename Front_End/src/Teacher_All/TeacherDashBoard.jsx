@@ -22,15 +22,17 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { blue, grey, green } from "@mui/material/colors";
+import { blue, grey } from "@mui/material/colors";
+import Loader from "../components/Loader";
 
 const TeacherDashBoard = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourseIndex, setSelectedCourseIndex] = useState(0);
-  const [openModal, setOpenModal] = useState(false); // Modal state
-  const [studentToDelete, setStudentToDelete] = useState(null); // Student to delete
-  const location = useLocation();
+  const [openModal, setOpenModal] = useState(false);
+  const [studentToDelete, setStudentToDelete] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  const location = useLocation();
   const teacherIdFromLocation = location.state?.teacher_id;
   const storedTeacherId = localStorage.getItem("teacher_id");
 
@@ -46,9 +48,10 @@ const TeacherDashBoard = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `https://anish-cognitech-404-back.onrender.com/api/teacher-dashboard/course-student-fetch/${teacherId}`
+          `http://localhost:5001/course-student-fetch/${teacherId}`
         );
         setCourses(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
@@ -61,13 +64,11 @@ const TeacherDashBoard = () => {
     setSelectedCourseIndex(newIndex);
   };
 
-  // Open the confirmation modal
   const handleDeleteClick = (student) => {
     setStudentToDelete(student);
     setOpenModal(true);
   };
 
-  // Handle deletion after confirmation
   const handleDeleteConfirm = async () => {
     const studentId = studentToDelete._id;
     const courseId = courses[selectedCourseIndex]?.courseId;
@@ -79,7 +80,7 @@ const TeacherDashBoard = () => {
 
     try {
       const response = await axios.delete(
-        `https://anish-cognitech-404-back.onrender.com/api/teacher-dashboard/course/${courseId}/student/${studentId}`
+        `http://localhost:5001/course/${courseId}/student/${studentId}`
       );
 
       setCourses((prevCourses) =>
@@ -99,107 +100,138 @@ const TeacherDashBoard = () => {
       alert("Failed to delete the student.");
     }
 
-    // Close the modal
     setOpenModal(false);
   };
 
-  // Close the modal without deleting
   const handleDeleteCancel = () => {
     setOpenModal(false);
   };
 
   return (
     <TeacherLayout>
-      <Box sx={{ padding: "20px" }}>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", color: blue[800] }}>
-          Teacher Dashboard
-        </Typography>
+      <Box sx={{ padding: { xs: "16px", sm: "24px", md: "40px" } }}>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <Tabs
+              value={selectedCourseIndex}
+              onChange={handleCourseChange}
+              variant="scrollable"
+              scrollButtons="auto"
+              sx={{
+                marginBottom: "20px",
+                borderBottom: "2px solid",
+                borderColor: blue[300],
+                "& .MuiTab-root": { fontWeight: "bold", color: blue[700] },
+              }}
+            >
+              {courses.map((course, index) => (
+                <Tab key={index} label={course.courseName} />
+              ))}
+            </Tabs>
 
-        <Tabs
-          value={selectedCourseIndex}
-          onChange={handleCourseChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          sx={{
-            marginBottom: "20px",
-            borderBottom: "2px solid",
-            borderColor: blue[300],
-            "& .MuiTab-root": { fontWeight: "bold", color: blue[700] },
-          }}
-        >
-          {courses.map((course, index) => (
-            <Tab key={index} label={course.courseName} />
-          ))}
-        </Tabs>
+            {courses.length > 0 ? (
+              <Box>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{
+                    fontWeight: "bold",
+                    color: blue[700],
+                    marginBottom: "10px",
+                  }}
+                >
+                  Enrolled Students
+                </Typography>
 
-        {courses.length > 0 ? (
-          <Box>
-            <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", marginTop: "10px", color: blue[700] }}>
-              Enrolled Students
-            </Typography>
-
-            <Card sx={{ backgroundColor: grey[100], padding: "15px", boxShadow: 2 }}>
-              <TableContainer component={Paper} sx={{ marginTop: "10px" }}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>S No.</TableCell>
-                      <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>Student Name</TableCell>
-                      <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>Username</TableCell>
-                      <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>Enrollment Date</TableCell>
-                      <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>REMOVE</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {courses[selectedCourseIndex]?.students.length > 0 ? (
-                      courses[selectedCourseIndex].students.map((student, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{index + 1}</TableCell>
-                          <TableCell>
-                            <Box sx={{ display: "flex", alignItems: "center" }}>
-                              <Avatar sx={{ marginRight: "10px", backgroundColor: blue[500] }}>
-                                {student.name.charAt(0)}
-                              </Avatar>
-                              {student.name}
-                            </Box>
+                <Card
+                  sx={{
+                    backgroundColor: grey[100],
+                    padding: "15px",
+                    boxShadow: 2,
+                    borderRadius: 2,
+                    marginBottom: "20px",
+                  }}
+                >
+                  <TableContainer component={Paper} sx={{ marginTop: "10px" }}>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>
+                            S No.
                           </TableCell>
-                          <TableCell>{student.username}</TableCell>
-                          <TableCell>{new Date(student.enrollmentDate).toLocaleDateString()}</TableCell>
-                          <TableCell>
-                            <Button
-                              variant="contained"
-                              color="error"
-                              onClick={() => handleDeleteClick(student)} // Open modal with student
-                            >
-                              Delete
-                            </Button>
+                          <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>
+                            Student Name
+                          </TableCell>
+                          <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>
+                            Username
+                          </TableCell>
+                          <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>
+                            Enrollment Date
+                          </TableCell>
+                          <TableCell sx={{ fontWeight: "bold", color: blue[800] }}>
+                            REMOVE
                           </TableCell>
                         </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={4} align="center" sx={{ fontStyle: "italic", color: grey[500] }}>
-                          No students enrolled
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Card>
-          </Box>
-        ) : (
-          <Typography variant="h6" color="textSecondary" sx={{ marginTop: "20px" }}>
-            No courses found.
-          </Typography>
+                      </TableHead>
+                      <TableBody>
+                        {courses[selectedCourseIndex]?.students.length > 0 ? (
+                          courses[selectedCourseIndex].students.map((student, index) => (
+                            <TableRow key={index}>
+                              <TableCell>{index + 1}</TableCell>
+                              <TableCell>
+                                <Box sx={{ display: "flex", alignItems: "center" }}>
+                                  <Avatar sx={{ marginRight: "10px", backgroundColor: blue[500] }}>
+                                    {student.name.charAt(0)}
+                                  </Avatar>
+                                  {student.name}
+                                </Box>
+                              </TableCell>
+                              <TableCell>{student.username}</TableCell>
+                              <TableCell>{new Date(student.enrollmentDate).toLocaleDateString()}</TableCell>
+                              <TableCell>
+                                <Button
+                                  variant="contained"
+                                  color="error"
+                                  onClick={() => handleDeleteClick(student)}
+                                  sx={{
+                                    fontSize: { xs: "12px", sm: "14px" },
+                                    padding: "6px 12px",
+                                    borderRadius: "5px",
+                                  }}
+                                >
+                                  Delete
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={5} align="center" sx={{ fontStyle: "italic", color: grey[500] }}>
+                              No students enrolled
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Card>
+              </Box>
+            ) : (
+              <Typography variant="h6" color="textSecondary" sx={{ marginTop: "20px" }}>
+                No courses found.
+              </Typography>
+            )}
+          </>
         )}
       </Box>
 
-      {/* Modal for confirmation */}
-      <Dialog open={openModal} onClose={handleDeleteCancel}>
-        <DialogTitle>Confirm Deletion</DialogTitle>
+      {/* Confirmation Modal */}
+      <Dialog open={openModal} onClose={handleDeleteCancel} maxWidth="xs" fullWidth>
+        <DialogTitle sx={{ fontWeight: "bold", color: blue[800] }}>Confirm Deletion</DialogTitle>
         <DialogContent>
-          <Typography variant="body1">
+          <Typography variant="body1" sx={{ color: grey[800] }}>
             Are you sure you want to remove {studentToDelete?.name} from this course?
           </Typography>
         </DialogContent>

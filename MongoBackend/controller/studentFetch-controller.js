@@ -1,17 +1,70 @@
-import express from "express";
-import cors from "cors";
-import Enrollment from "../modals/enrollmentSchema.js";
-import AssignTeacherSchema from "../modals/assignTeacherSchema.js";
 import mongoose from "mongoose";
+import Enrollment from "../modals/enrollmentSchema.js";
+import UserRegisterSchema from "../modals/userRegisterSchema.js";
+import AssignTeacherSchema from "../modals/assignTeacherSchema.js";
 
-const TeacherDashBoard = express();
+export const adminStudentFetch = async (req, res) => {
+  try {
 
-TeacherDashBoard.use(cors());
-TeacherDashBoard.use(express.json());
-TeacherDashBoard.use(express.urlencoded({ extended: true }));
+    const students = await UserRegisterSchema.find({type: "Student"}, "name username _id").exec();
 
-// Fetch courses with enrolled students
-TeacherDashBoard.get("/course-student-fetch/:teacherId", async (req, res) => {
+    const studentDetailWithCourse = [];
+
+    for (const student of students) {
+
+      const enrollments = await Enrollment.find({ user: student._id })
+        .populate('course', 'course_name')
+        .exec();
+
+      const courseNames = enrollments.map(enrollment => {
+        if (enrollment.course) {
+
+          return enrollment.course.course_name;
+
+        } 
+      });
+
+      studentDetailWithCourse.push({
+        studentId: student._id,
+        studentName: student.name,
+        studentUsername: student.username,
+        enrolledCourses: courseNames  
+      });
+    }
+
+    res.status(200).json(studentDetailWithCourse);
+
+  } catch (error) {
+    console.error("Error in fetching student details:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+}
+
+export const adminStudentManage = async (req, res) => {
+  const { studentId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(studentId)) {
+    return res.status(400).json({ message: "Invalid student ID format" });
+  }
+
+  try {
+
+    const student = await UserRegisterSchema.findByIdAndDelete(studentId);
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await Enrollment.deleteMany({ user: studentId });
+
+    res.status(200).json({ message: "Student and related enrollments deleted successfully" });
+  } catch (error) {
+    console.error("Error in deleting student:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+}
+
+export const teacherDashBoard = async (req, res) => {
   const { teacherId } = req.params;
 
   try {
@@ -63,45 +116,11 @@ TeacherDashBoard.get("/course-student-fetch/:teacherId", async (req, res) => {
       })
     );
 
-    // Remove any courses with null students data
     const validCourseWithStudent = courseWithStudent.filter(Boolean);
 
-    // Send the course and student data to the frontend
     res.json(validCourseWithStudent);
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).send("Server error");
   }
-});
-
-// Delete a student from a course
-TeacherDashBoard.delete("/course/:courseId/student/:studentId", async (req, res) => {
-  const { courseId, studentId } = req.params;
-
-  try {
-    // Validate `courseId` and `studentId` as ObjectIds
-    const isCourseIdValid = mongoose.Types.ObjectId.isValid(courseId);
-    const isStudentIdValid = mongoose.Types.ObjectId.isValid(studentId);
-
-    if (!isCourseIdValid || !isStudentIdValid) {
-      return res.status(400).json({ message: "Invalid course ID or student ID." });
-    }
-
-    // Find the enrollment and delete it
-    const deletedEnrollment = await Enrollment.findOneAndDelete({
-      course: courseId,
-      user: studentId,
-    });
-
-    if (!deletedEnrollment) {
-      return res.status(404).json({ message: "Student not found in this course." });
-    }
-
-    res.json({ message: "Student removed successfully." });
-  } catch (error) {
-    console.error("Error removing student:", error);
-    res.status(500).json({ message: "Failed to remove student.", error });
-  }
-});
-
-export default TeacherDashBoard;
+}

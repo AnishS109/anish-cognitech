@@ -1,6 +1,6 @@
 import React from 'react'
-import StudentNavBar from './StudentNavBar.jsx'
-import StudentFooter from './StudentFooter.jsx'
+import StudentNavBar from './StudentNavBar'
+import StudentFooter from './studentFooter'
 
 const StudentLayout = ({ children }) => {
   return (

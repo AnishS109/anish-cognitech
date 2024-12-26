@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import StudentIMG from "../Images/student.jpeg";
 import TeacherIMG from "../Images/Teacher2.jpeg";
 import AdminIMG from "../Images/admin.jpeg";
+import "../styles/loginUsertype.css";
 import { NavLink } from 'react-router-dom';
 
 const Register = () => {

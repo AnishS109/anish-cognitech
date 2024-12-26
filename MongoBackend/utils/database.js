@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const mongoURL = 'mongodb+srv://root:root@lms.8dvli.mongodb.net/';
+const mongoURL = 'mongodb+srv://root:6TmgY4T39vnnMS6b@lms.8dvli.mongodb.net/test';
 
 const connectDB = async() => {
   try {

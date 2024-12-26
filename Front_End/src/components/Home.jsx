@@ -19,10 +19,11 @@ const Home = () => {
           textAlign: { xs: "center", md: "left" },
           px: { xs: 2, md: 5 },
           py: { xs: 3, md: 5 },
+          gap: { xs: 3, md: 5 },
         }}
       >
+        {/* Text Content Section */}
         <Box sx={{ flex: 1, p: { xs: 2, md: 2 } }}>
-          
           <Typography variant="h5" className="BestPlatformText">
             Best Online Platform
           </Typography>
@@ -31,51 +32,55 @@ const Home = () => {
             Unlock your potential with every lesson.
           </Typography>
 
-          <Typography variant="body1" sx={{ mt: 2, fontSize: { xs: "1rem", md: "1rem" } }}>
-
-          Cognitech is a dynamic Learning Management System that empowers learners and instructors with engaging tools, fostering success and growth one course at a time.
-
+          <Typography
+            variant="body1"
+            sx={{ mt: 2, fontSize: { xs: "1rem", md: "1rem" } }}
+          >
+            Cognitech is a dynamic Learning Management System that empowers
+            learners and instructors with engaging tools, fostering success and
+            growth one course at a time.
           </Typography>
 
+          {/* Search Section */}
           <Box
-      sx={{
-        display: 'flex',
-        flexDirection: { xs: 'column', md: 'row' },
-        gap: 2,
-        alignItems: 'center',
-        width: '100%',
-        maxWidth: '600px',
-        mt:"15px",
-      }}
-    >
-      <TextField
-        variant="outlined"
-        label="Search Courses"
-        sx={{
-          height: "50px",
-          width: { xs: "100%", md: "80%" }
-        }}
-      />
-      <Button
-      variant="contained"
-      sx={{
-        height: "50px",
-        width: { xs: "100%", md: "auto" },
-        borderRadius: "8px",
-        bgcolor: "rgb(235, 71, 30)",
-        mt: "3px",
-        transition: "transform 0.2s ease-in-out",
-        '&:hover': {
-          transform: "scale(1.05)",
-        },
-      }}
-    >
-      <SearchIcon />
-    </Button>
-    </Box>
-
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              gap: 2,
+              alignItems: "center",
+              width: "100%",
+              maxWidth: "600px",
+              mt: "15px",
+            }}
+          >
+            <TextField
+              variant="outlined"
+              label="Search Courses"
+              sx={{
+                height: "50px",
+                width: { xs: "100%", md: "80%" },
+              }}
+            />
+            <Button
+              variant="contained"
+              sx={{
+                height: "50px",
+                width: { xs: "100%", md: "auto" },
+                borderRadius: "8px",
+                bgcolor: "rgb(235, 71, 30)",
+                mt: "3px",
+                transition: "transform 0.2s ease-in-out",
+                '&:hover': {
+                  transform: "scale(1.05)",
+                },
+              }}
+            >
+              <SearchIcon />
+            </Button>
+          </Box>
         </Box>
 
+        {/* Image Section */}
         <Box
           sx={{
             flex: 1,
@@ -98,24 +103,28 @@ const Home = () => {
         </Box>
       </Box>
 
-      <Box sx={{
-        width:"100%",
-        textAlign:{sm:"center",xs:"center",md:"left"}}}>
-
-      <Typography
-      variant='h4'
-      gutterBottom
-      sx={{
-        fontWeight:"700",
-        ml:"30px",
-        my:{xs:"20px",sd:"20px"}
-      }}>
-        Latest Courses
-      </Typography>
-
+      {/* Latest Courses Section */}
+      <Box
+        sx={{
+          width: "100%",
+          textAlign: { xs: "center", md: "left" },
+        }}
+      >
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            fontWeight: "700",
+            ml: { xs: 0, md: "30px" },
+            my: { xs: "20px", md: "20px" },
+          }}
+        >
+          Latest Courses
+        </Typography>
       </Box>
 
-      <Box 
+      {/* Courses Cards Section */}
+      <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -124,44 +133,47 @@ const Home = () => {
           gap: "20px",
           flexDirection: {
             xs: "column",
-            sm: "column",
-            md: "row"
+            md: "row",
           },
-          mb:"20px"
+          mb: "20px",
         }}
->
-
-      <CoursesCards/>
-
+      >
+        <CoursesCards />
       </Box>
 
+      {/* View All Courses Button */}
       <NavLink to="/courses" style={{ textDecoration: "none" }}>
-
-      <Box sx={{
-        width:"100%",
-        display:"flex",
-        justifyContent:"center",
-        my:"20px"
-      }}>
-
-      <Button variant='outlined' sx={{ ml: "10px", mt: "10px", height: "30px", textTransform: "none",color:"black",border:"1px solid black",
-      transition: "transform 0.2s ease, box-shadow 0.2s ease",
-      "&:hover":{
-      color: 'white',
-      backgroundColor:"black",
-      transform: "scale(1.1)"
-      }}}>
-        
-        View All Courses
-        
-        </Button>
-
-      </Box>
-
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            my: "20px",
+          }}
+        >
+          <Button
+            variant="outlined"
+            sx={{
+              ml: "10px",
+              mt: "10px",
+              height: "30px",
+              textTransform: "none",
+              color: "black",
+              border: "1px solid black",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+              '&:hover': {
+                color: "white",
+                backgroundColor: "black",
+                transform: "scale(1.1)",
+              },
+            }}
+          >
+            View All Courses
+          </Button>
+        </Box>
       </NavLink>
-
     </Layout>
   );
-}
+};
 
 export default Home;

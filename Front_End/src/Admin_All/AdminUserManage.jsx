@@ -7,14 +7,14 @@ const AdminUserManage = () => {
   const [students, setStudents] = useState([]);
   const [open, setOpen] = useState(false); // Modal state
   const [studentToDelete, setStudentToDelete] = useState(null); // Student to delete
-  const [studentLoad, setStudentLoad] = useState(true)
+  const [studentLoad, setStudentLoad] = useState(true);
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch('https://anish-cognitech-404-back.onrender.com/api/admin-s/admin-student-details');
+      const response = await fetch('http://localhost:5001/student-data');
       const data = await response.json();
       setStudents(data);
-      setStudentLoad(false)
+      setStudentLoad(false);
     } catch (error) {
       console.error("Error in fetching:", error);
     }
@@ -27,7 +27,7 @@ const AdminUserManage = () => {
 
   const confirmDelete = async () => {
     try {
-      const response = await fetch(`https://anish-cognitech-404-back.onrender.com/api/admin-user-m/user-manage/${studentToDelete}`, {
+      const response = await fetch(`http://localhost:5001/user-manage/${studentToDelete}`, {
         method: 'DELETE',
       });
 
@@ -54,53 +54,57 @@ const AdminUserManage = () => {
 
   return (
     <AdminLayout>
-      <Box sx={{ marginBottom: 3, padding: '20px', backgroundColor: 'background.default' }}>
+      <Box sx={{ marginBottom: 3, padding: '10px', backgroundColor: 'background.default', maxWidth:"99vw" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Paper sx={{ boxShadow: 3, borderRadius: 2 }}>
               <Box sx={{ padding: '16px', backgroundColor: 'primary.main', borderRadius: '8px 8px 0 0', color: 'white' }}>
-                <Typography variant="h6">Manage Students</Typography>
+                <Typography variant="h6" fontWeight="bold">Manage Students</Typography>
               </Box>
               <Box sx={{ overflowX: 'auto', padding: '16px' }}>
-
-                {studentLoad ? (<Loader/>) : (
-                  <Table sx={{ minWidth: 650 }} aria-label="student details table">
-                  <TableHead sx={{ backgroundColor: 'grey.100' }}>
-                    <TableRow>
-                      <TableCell>Student ID</TableCell>
-                      <TableCell>Student Name</TableCell>
-                      <TableCell>Username</TableCell>
-                      <TableCell>Enrolled Courses</TableCell>
-                      <TableCell>Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {students.map((student) => (
-                      <TableRow key={student.studentId} sx={{ '&:hover': { backgroundColor: 'grey.50' } }}>
-                        <TableCell>{student.studentId}</TableCell>
-                        <TableCell>{student.studentName}</TableCell>
-                        <TableCell>{student.studentUsername}</TableCell>
-                        <TableCell>{student.enrolledCourses || 'No Course Enrolled'}</TableCell>
-                        <TableCell>
-                          <Button
-                            variant="contained"
-                            color="error"
-                            onClick={() => handleDelete(student.studentId)}
-                            sx={{
-                              textTransform: 'none',
-                              padding: '6px 16px',
-                              '&:hover': { backgroundColor: 'error.dark' }
-                            }}
-                          >
-                            Delete
-                          </Button>
-                        </TableCell>
+                {studentLoad ? (
+                  <Loader />
+                ) : (
+                  <Table sx={{ minWidth: 700 }} aria-label="student details table">
+                    <TableHead sx={{ backgroundColor: 'grey.100' }}>
+                      <TableRow>
+                        <TableCell><Typography variant="body1" fontWeight="bold">Student ID</Typography></TableCell>
+                        <TableCell><Typography variant="body1" fontWeight="bold">Student Name</Typography></TableCell>
+                        <TableCell><Typography variant="body1" fontWeight="bold">Username</Typography></TableCell>
+                        <TableCell><Typography variant="body1" fontWeight="bold">Enrolled Courses</Typography></TableCell>
+                        <TableCell><Typography variant="body1" fontWeight="bold">Actions</Typography></TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHead>
+                    <TableBody>
+                      {students.map((student) => (
+                        <TableRow key={student.studentId} sx={{ '&:hover': { backgroundColor: 'grey.50' } }}>
+                          <TableCell>{student.studentId}</TableCell>
+                          <TableCell>{student.studentName}</TableCell>
+                          <TableCell>{student.studentUsername}</TableCell>
+                          <TableCell>
+                            {student.enrolledCourses && student.enrolledCourses.length > 0
+                              ? student.enrolledCourses.join(', ')
+                              : 'No course enrolled'}
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              variant="contained"
+                              color="error"
+                              onClick={() => handleDelete(student.studentId)}
+                              sx={{
+                                textTransform: 'none',
+                                padding: '6px 16px',
+                                '&:hover': { backgroundColor: 'error.dark' }
+                              }}
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 )}
-                
               </Box>
             </Paper>
           </Grid>
