@@ -123,7 +123,7 @@ function AddCourse() {
     console.log(courseData);
     
     try {
-      const response = await fetch("http://localhost:5001/course-add", {
+      const response = await fetch("https://anish-cognitech-backend.onrender.com/course-add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

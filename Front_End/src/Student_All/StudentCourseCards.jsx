@@ -41,7 +41,7 @@ const StudentCourseCards = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/all-courses");
+        const response = await axios.get("https://anish-cognitech-backend.onrender.com/all-courses");
         setCourses(response.data);
         setLoading(false);  // Hide loader when data is fetched
       } catch (error) {
@@ -90,7 +90,7 @@ const StudentCourseCards = () => {
   const handleAddCourse = async () => {
     if (studentId && selectedCourse) {
       try {
-        const response = await axios.post("http://localhost:5001/api/enrolled/enrolled-course", {
+        const response = await axios.post("https://anish-cognitech-backend.onrender.com/api/enrolled/enrolled-course", {
           student_id: studentId,
           course_id: selectedCourse.id 
         });

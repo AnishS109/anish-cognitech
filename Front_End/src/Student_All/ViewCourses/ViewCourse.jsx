@@ -32,7 +32,7 @@ function ViewCourse() {
     if (course_id) {
       const fetchCourseData = async () => {
         try {
-          const response = await fetch(`http://localhost:5001/course/${course_id}`);
+          const response = await fetch(`https://anish-cognitech-backend.onrender.com/course/${course_id}`);
           const data = await response.json();
           setCourseData(data);
         } catch (error) {

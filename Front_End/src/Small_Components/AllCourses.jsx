@@ -37,7 +37,7 @@ const AllCourses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/all-courses');
+        const response = await axios.get('https://anish-cognitech-backend.onrender.com/all-courses');
         setCourses(response.data);
         setLoading(false);
       } catch (error) {

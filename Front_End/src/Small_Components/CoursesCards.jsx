@@ -23,7 +23,7 @@ const CoursesCards = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/latest-course");
+        const response = await axios.get("https://anish-cognitech-backend.onrender.com/latest-course");
         setCourses(response.data);
       } catch (error) {
         console.error('Error fetching courses:', error);

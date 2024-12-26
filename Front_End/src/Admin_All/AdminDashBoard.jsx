@@ -11,7 +11,7 @@ const AdminDashBoard = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch('http://localhost:5001/student-data');
+      const response = await fetch('https://anish-cognitech-backend.onrender.com/student-data');
       const data = await response.json();
       setStudents(data);
       setStudentLoad(false);
@@ -22,7 +22,7 @@ const AdminDashBoard = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch('http://localhost:5001/teacher-data');
+      const response = await fetch('https://anish-cognitech-backend.onrender.com/teacher-data');
       const data = await response.json();
       setTeachers(data);
       setTeacherLoad(false);

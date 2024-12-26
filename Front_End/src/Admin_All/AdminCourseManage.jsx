@@ -33,7 +33,7 @@ const AdminCourseManage = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch('http://localhost:5001/all-courses');
+      const response = await fetch('https://anish-cognitech-backend.onrender.com/all-courses');
       const data = await response.json();
       setAllCourses(data);
       setCourseLoad(false);
@@ -55,7 +55,7 @@ const AdminCourseManage = () => {
     if (!courseToDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:5001/delete-course/${courseToDelete}`, {
+      const response = await fetch(`https://anish-cognitech-backend.onrender.com/delete-course/${courseToDelete}`, {
         method: 'DELETE',
       });
 

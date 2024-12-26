@@ -50,7 +50,7 @@ const AdminAssignCourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5001/course-assign', {
+      const response = await fetch('https://anish-cognitech-backend.onrender.com/course-assign', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const AdminAssignCourse = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch('http://localhost:5001/teacher-course-data');
+      const response = await fetch('https://anish-cognitech-backend.onrender.com/teacher-course-data');
       const data = await response.json();
       setTeachers(Array.isArray(data) ? data : []);
       setCourseLoad(false);
@@ -93,7 +93,7 @@ const AdminAssignCourse = () => {
 
   const handleDelete = async (teacherId, courseId) => {
     try {
-      const response = await fetch('http://localhost:5001/course-delete', {
+      const response = await fetch('https://anish-cognitech-backend.onrender.com/course-delete', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

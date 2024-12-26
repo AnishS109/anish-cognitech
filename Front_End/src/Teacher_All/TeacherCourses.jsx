@@ -128,7 +128,7 @@ const TeacherCourses = () => {
       };
 
       const response = await fetch(
-        "http://localhost:5001/add-lecture-video",
+        "https://anish-cognitech-backend.onrender.com/add-lecture-video",
         {
           method: "POST",
           headers: {
@@ -155,7 +155,7 @@ const TeacherCourses = () => {
     const fetchAssignedCourses = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5001/course-student-fetch/${teacherId}`
+          `https://anish-cognitech-backend.onrender.com/course-student-fetch/${teacherId}`
         );
         const result = await response.json();
 
