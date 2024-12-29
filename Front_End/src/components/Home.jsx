@@ -200,6 +200,20 @@ const Home = () => {
         ) : serachTerm !== "" ? (
           searchTermOutput.map((course, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: "20px",
+                  flexDirection: {
+                    xs: "column",
+                    md: "row",
+                  },
+                  mb: "20px",
+                }}
+              >
               <Card
                 sx={{
                   maxWidth: 345,
@@ -233,6 +247,7 @@ const Home = () => {
                   </Button>
                 </CardActions>
               </Card>
+              </Box>
             </Grid>
           ))
         ) : (<h1></h1>)}
