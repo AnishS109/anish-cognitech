@@ -84,7 +84,7 @@ const AllCourses = () => {
   return (
     <Box sx={{ padding: 2 }}>
       {loading ? (
-        <Loader />
+        <div style={{width:"100vw",display:"flex",alignItems:"center",justifyContent:"center",height:"60vh"}}><Loader /></div>
       ) : error ? (
         <Typography variant="h6" sx={{ textAlign: 'center', mt: 3, color: 'red' }}>
           Failed to load courses. Please try again later.

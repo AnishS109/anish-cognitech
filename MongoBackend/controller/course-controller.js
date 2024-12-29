@@ -4,6 +4,8 @@ import Course from "../modals/allCoursesSchema.js"
 import mongoose from "mongoose";
 import Enrollment from "../modals/enrollmentSchema.js";
 
+
+
 export const LatestCourse = async(req,res) => {
 
   try {
@@ -21,6 +23,12 @@ export const LatestCourse = async(req,res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+
+
+
+
+
 
 export const AllCourses = async (req, res) => {
   try {
@@ -42,6 +50,10 @@ export const AllCourses = async (req, res) => {
   }
 };
 
+
+
+
+
 export const ViewCourse = async (req, res) => {
   const { course_id } = req.params;
   
@@ -55,6 +67,11 @@ export const ViewCourse = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 }
+
+
+
+
+
 
 export const adminDeleteCourse = async(req,res) => {
   const {courseId} = req.params
@@ -79,6 +96,13 @@ export const adminDeleteCourse = async(req,res) => {
   }
 }
 
+
+
+
+
+
+
+
 export const addCourse = async (req, res) => {
   const courseData = req.body;
 
@@ -96,6 +120,13 @@ export const addCourse = async (req, res) => {
     res.status(500).json({ message: "Failed to create course", error: error.message });
   }
 }
+
+
+
+
+
+
+
 
 export const deleteStudentFromCourse = async (req, res) => {
   const { courseId, studentId } = req.params;
@@ -126,6 +157,12 @@ export const deleteStudentFromCourse = async (req, res) => {
   }
 }
 
+
+
+
+
+
+
 export const UpdateCourse = async(req, res) => {
   const { courseId, lectureName, lectureURL, questions, mainQuiz } = req.body;
 
@@ -146,5 +183,33 @@ export const UpdateCourse = async(req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
+  }
+}
+
+
+
+
+
+
+
+
+export const searchCourses = async(req,res) => {
+  const searchCourse = req.params.searchCourse
+
+  try {
+
+    const course = await AllCourseSchema.find({
+      course_name: {$regex: searchCourse, $options:"i"  }
+    })
+
+    if(course.length === 0){
+      return res.status(404).json({message:"Course not found"})
+    }
+
+    return res.status(200).json(course)
+    
+  } catch (error) {
+    console.error("Error while searching",error)
+    return res.status(500).json({message:"Error while searching"})
   }
 }

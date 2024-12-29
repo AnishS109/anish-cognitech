@@ -37,7 +37,7 @@ const CoursesCards = () => {
   const staticImages = {
     "Python Course": Python,
     "React Course": ReactIMG,
-    "SQL Course": sqlIMG,
+    "SQl Course": sqlIMG,
   };
 
   const handleOpen = (course) => {

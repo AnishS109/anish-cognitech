@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 
-import { addCourse, adminDeleteCourse, AllCourses, deleteStudentFromCourse, LatestCourse, UpdateCourse, ViewCourse } from "../controller/course-controller.js"
+import { addCourse, adminDeleteCourse, AllCourses, deleteStudentFromCourse, LatestCourse, searchCourses, UpdateCourse, ViewCourse } from "../controller/course-controller.js"
 import { Login, UserRegister } from "../controller/account-controller.js"
 import { adminStudentFetch, adminStudentManage, teacherDashBoard } from "../controller/studentFetch-controller.js"
 import { adminTeacherFetch, courseAssignteacher, courseDetailTeacher, removeFromCourseteacher } from "../controller/teacherFetch-controller.js"
@@ -15,6 +15,7 @@ Mainroutes.use(express.urlencoded({extended:true}))
 Mainroutes.get("/latest-course", LatestCourse)
 Mainroutes.get("/all-courses", AllCourses)
 Mainroutes.get("/course/:course_id", ViewCourse)
+Mainroutes.get("/search-courses/:searchCourse", searchCourses)
 
 Mainroutes.post("/register", UserRegister)
 Mainroutes.post("/login", Login)

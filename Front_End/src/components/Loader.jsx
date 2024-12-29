@@ -6,7 +6,7 @@ const Loader = () => {
     alignItems: "center",
     justifyContent: "center",
     height: "15vh",
-    backgroundColor: "rgba(0, 0, 0, 0.1)", // Optional background for better contrast
+    backgroundColor: "white", // Optional background for better contrast
   };
 
   const spinnerStyle = {
